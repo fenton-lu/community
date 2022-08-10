@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+</head>
+<body>
+<!--
+    访问静态资源时看static目录的下一级
+    如访问ajax-demo.html时，访问路径为：http://localhost:8080/community/html/ajax-demo.html
+    -->
+    <p>
+        <input type="button" value="发送" onclick="send();">
+    </p>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script>
+        function send(){
+            // post异步请求
+            $.post(
+                "/community/alpha/ajax", //访问路径
+                {"name": "张三", "age": 24}, //向服务器提交的数据（js对象，就是json格式）
+                //回调函数，匿名的
+                //当服务器响应浏览器时，浏览器会调用这个方法，并把服务器返回的数据传给data
+                function (data){
+                    console.log(typeof(data));// String类型
+                    console.log(data);
+
+                    data = $.parseJSON(data);
+                    console.log(typeof(data));// Object类型
+                    console.log(data.code);
+                    console.log(data.msg);
+                }
+            );
+        }
+    </script>
+
+</body>
+</html>
